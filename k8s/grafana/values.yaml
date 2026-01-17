@@ -1,0 +1,26 @@
+# Grafana admin credentials
+adminUser: admin
+adminPassword: prom-operator
+
+# Expose Grafana on a NodePort to VPS
+service:
+  type: NodePort
+  port: 80        # Cluster port inside k8s
+  nodePort: 30080 # VPS port you will access externally
+
+# Prometheus datasource (adjust namespace if yours is different)
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://k8s-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+        isDefault: true
+
+# Optional: enable persistence for dashboards
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: standard
