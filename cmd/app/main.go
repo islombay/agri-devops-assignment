@@ -41,8 +41,8 @@ func main() {
 	// Router
 	mux := http.NewServeMux()
 	mux.Handle("/", router.NewRouter(agriHandler))
-	mux.HandleFunc("/health/live", health.Liveness)
-	mux.HandleFunc("/health/ready", health.Readiness)
+	mux.HandleFunc("/healthz", health.Liveness)
+	mux.HandleFunc("/readyz", health.Readiness)
 
 	server := &http.Server{
 		Addr:    ":" + cfg.Port,

@@ -24,14 +24,16 @@ spec:
             httpGet:
               path: {{ .Values.probes.readinessPath }}
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 5
+            failureThreshold: 6
           livenessProbe:
             httpGet:
               path: {{ .Values.probes.livenessPath }}
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 15
             periodSeconds: 10
+            failureThreshold: 6
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
