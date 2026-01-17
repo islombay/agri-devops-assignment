@@ -29,7 +29,7 @@ func main() {
 		LogLevel: cfg.LogLevel,
 	})
 
-	log.Info("application starting",
+	log.Info("application starting, version 1",
 		"env", cfg.Env,
 		"port", cfg.Port,
 	)
