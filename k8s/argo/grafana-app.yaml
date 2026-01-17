@@ -7,22 +7,36 @@ spec:
   project: default
 
   source:
-    repoURL: 'https://github.com/islombay/agri-devops-assignment.git'
-    targetRevision: main
-    path: k8s/grafana
+    repoURL: https://grafana.github.io/helm-charts
+    chart: grafana
+    targetRevision: 7.3.9
     helm:
-      valueFiles:
-        - values.yaml
+      values: |
+        adminUser: admin
+        adminPassword: prom-operator
 
-  # Target namespace in cluster
+        service:
+          type: NodePort
+          port: 80
+          nodePort: 30080
+
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                access: proxy
+                url: http://k8s-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+                isDefault: true
+
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: monitoring
 
-  # Automatic sync
   syncPolicy:
     automated:
-      prune: true          # Remove resources that are no longer in Git
-      selfHeal: true       # Fix drift automatically
+      prune: true
+      selfHeal: true
     syncOptions:
-      - CreateNamespace=true # Create namespace if it doesn't exist
+      - CreateNamespace=true
