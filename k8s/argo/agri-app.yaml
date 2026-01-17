@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: "https://github.com/islombay/agri-devops-assignment.git"
     targetRevision: main
-    path: "helm/agri-app"
+    path: "helm"
     helm:
       valueFiles:
         - values.yaml
