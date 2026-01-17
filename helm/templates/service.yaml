@@ -7,6 +7,7 @@ spec:
   selector:
     app: agri-app
   ports:
-    - port: {{ .Values.service.port }}
+    - name: metrics
+      port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
