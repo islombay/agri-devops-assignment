@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: agri-app
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: agri-app
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: {{ .Values.service.port }}
+      path: /metrics
+      interval: 15s

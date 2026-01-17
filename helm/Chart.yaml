@@ -1,0 +1,5 @@
+apiVersion: v2
+name: agri-app
+description: Helm chart for Agriculture Go App
+version: 0.1.0
+appVersion: "1.0.0"
