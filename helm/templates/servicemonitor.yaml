@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: agri-app
   labels:
-    release: prometheus
+    release: k8s-prometheus
 spec:
   selector:
     matchLabels:
