@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -44,9 +46,10 @@ func main() {
 	mux.HandleFunc("/healthz", health.Liveness)
 	mux.HandleFunc("/readyz", health.Readiness)
 
+	loggerMux := LogRequestMiddleware(mux, log)
 	server := &http.Server{
 		Addr:    ":" + cfg.Port,
-		Handler: mux,
+		Handler: loggerMux,
 	}
 
 	// Start server
@@ -72,4 +75,16 @@ func main() {
 	}
 
 	log.Info("server stopped gracefully")
+}
+
+func LogRequestMiddleware(next http.Handler, log *slog.Logger) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		log.Info(fmt.Sprintf("Incoming request: method=%s path=%s remote=%s", r.Method, r.URL.Path, r.RemoteAddr))
+
+		next.ServeHTTP(w, r)
+
+		duration := time.Since(start)
+		log.Info(fmt.Sprintf("Completed request: method=%s path=%s duration=%s", r.Method, r.URL.Path, duration))
+	})
 }
