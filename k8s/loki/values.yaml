@@ -41,6 +41,12 @@ lokiCanary:
 monitoring:
   selfMonitoring:
     enabled: false
+  dashboards:
+    enabled: false
+  rules:
+    enabled: false
+  serviceMonitor:
+    enabled: false
 
 service:
   type: ClusterIP
