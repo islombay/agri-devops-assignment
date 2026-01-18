@@ -1,6 +1,7 @@
-loki:
-  auth_enabled: false
+deploymentMode: singleBinary
+auth_enabled: false
 
+loki:
   commonConfig:
     replication_factor: 1
 
@@ -22,6 +23,10 @@ loki:
 
 singleBinary:
   replicas: 1
+
+simple:
+  enabled: false       # <- disable simple/scalable deployment
+  replicas: 0
 
 service:
   type: ClusterIP
