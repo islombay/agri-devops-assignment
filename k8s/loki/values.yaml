@@ -21,6 +21,13 @@ loki:
   ruler:
     enable_api: false
 
+monitoring:
+  selfMonitoring:
+    enabled: false
+    grafanaAgent:
+      installOperator: false
+
+
 write:
   replicas: 0
 read:
