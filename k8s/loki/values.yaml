@@ -18,25 +18,29 @@ loki:
           prefix: index_
           period: 24h
 
-  ruler:
-    enable_api: false
+singleBinary:
+  replicas: 1
 
-monitoring:
-  selfMonitoring:
-    enabled: false
-    grafanaAgent:
-      installOperator: false
-
-
-write:
-  replicas: 0
+# Disable scalable targets
 read:
+  replicas: 0
+write:
   replicas: 0
 backend:
   replicas: 0
 
-singleBinary:
-  replicas: 1
+# 🔴 HARD DISABLE grafana agent operator
+grafana-agent-operator:
+  enabled: false
+
+# 🔴 HARD DISABLE canary (this one re-enables agent!)
+lokiCanary:
+  enabled: false
+
+# Optional but safe
+monitoring:
+  selfMonitoring:
+    enabled: false
 
 service:
   type: ClusterIP
